@@ -4,15 +4,47 @@ import cv2
 import numpy as np
 import os
 
+# to video tutorial 3
 
+def cecordCamera():
 
+    cap = cv2.VideoCapture('split.avi')
+    fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+    out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (640,480))
+
+    while True:
+        ret, frame = cap.read()
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        out.write(frame)
+        cv2.imshow('frame', frame)
+
+        if cv2.waitKey(10) & 0xff == 27:
+            break
+
+    out.release()
+    cap.release()
+    cv2.destroyAllWindows()
+
+def openCamera():
+
+    cap = cv2.VideoCapture('split.avi')
+
+    while True:
+        ret, frame = cap.read()
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cv2.imshow('frame', frame)
+
+        if cv2.waitKey(10) & 0xff == 27:
+            break
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 def pushToGit():
     print "Executing os commands:"
     os.system("dir")
     os.system("git init")
-
     print "Done!"
 
 

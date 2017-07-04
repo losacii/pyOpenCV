@@ -2,13 +2,13 @@ from mod.Test import *
 
 
 if __name__ == '__main__':
-    
-    
 
-    #pushToGit()
-    log("Hello Word!\n" * 5)
+    openCamera()
+    #pushToGit() # THIS DOESN'T WORK!
+    #log("Hello Word!\n" * 5)
     #cvGo()
     #helloWorld()
+    pass
 
 '''
     install python
@@ -22,4 +22,8 @@ if __name__ == '__main__':
         move it to python/Lib/site-packges/
         done!
         import cv2
+
+    imwrite(filename, imgObj)
+
+
 '''
