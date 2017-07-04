@@ -5,8 +5,8 @@ if __name__ == '__main__':
     
     
 
-    pushToGit()
-    #log("Hello Word!\n" * 5)
+    #pushToGit()
+    log("Hello Word!\n" * 5)
     #cvGo()
     #helloWorld()
 
