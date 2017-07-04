@@ -1,33 +1,14 @@
-import sys
-log = sys.stdout.write
-import os
-import random
-import cv2
-import numpy as np
-
-win1 = 'Black Rect'
-
-img0 = cv2.imread("c:/pic/color.png")
-img1 = np.zeros((540,960),float)
-img2 = cv2.imread("c:/pic/f22.jpg",cv2.IMREAD_GRAYSCALE)
-
-cv2.imshow(win1,img0)
-cv2.waitKey()
-
-cv2.imshow(win1,img1)
-cv2.waitKey()
-
-cv2.imshow(win1,img2)
-cv2.waitKey()
-
-cv2.destroyAllWindows()
-
-log("opencv-version: ")
-log(cv2.__version__)
+from mod.Test import *
 
 
-print "\n\n--- PRESS ENTER TO CONTINUE ---\n"
+if __name__ == '__main__':
+    
+    
 
+    pushToGit()
+    #log("Hello Word!\n" * 5)
+    #cvGo()
+    #helloWorld()
 
 '''
     install python
