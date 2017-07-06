@@ -3,8 +3,28 @@ log = sys.stdout.write
 import cv2
 import numpy as np
 import os
+import time, datetime
 
 # to video tutorial 3
+
+def monoColorPicturesShow():
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    img = np.zeros((540,960), np.uint8)
+
+
+    while True:
+
+        showTime = time.strftime("%Y-%m-%d_%H:%M:%S")
+        secDigits = datetime.datetime.now().microsecond.__str__()[:2]
+        info = "{0}{1}.{2}".format('REC_', showTime, secDigits)
+        img = np.zeros((540,960), np.float)
+        cv2.putText(img, info,(35,25), font, 0.5, (200,60,100,1), 1)
+        cv2.imshow('img', img)
+
+        if 27 == (cv2.waitKey(20) & 0xff):
+            break
+
+    cv2.destroyAllWindows()
 
 def cecordCamera():
 

@@ -3,7 +3,8 @@ from mod.Test import *
 
 if __name__ == '__main__':
 
-    openCamera()
+    monoColorPicturesShow()
+    #openCamera()
     #pushToGit() # THIS DOESN'T WORK!
     #log("Hello Word!\n" * 5)
     #cvGo()
