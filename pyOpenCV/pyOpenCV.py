@@ -1,9 +1,10 @@
 from mod.Test import *
 
-
 if __name__ == '__main__':
 
-    monoColorPicturesShow()
+    countDownTime(6)
+    #draw_with_cv()
+    #monoColorPicturesShow()
     #openCamera()
     #pushToGit() # THIS DOESN'T WORK!
     #log("Hello Word!\n" * 5)
