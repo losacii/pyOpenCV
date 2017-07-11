@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mod\stock.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="mod\Test.py">
       <SubType>Code</SubType>
     </Compile>
@@ -31,6 +34,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="mod\" />
+    <Folder Include="img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="img\mythEyes.jpg" />
+    <Content Include="img\stinkbug.png" />
+    <Content Include="mod\stinkbug.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

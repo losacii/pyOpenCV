@@ -1,8 +1,24 @@
+# coding:utf-8
 from mod.Test import *
+from mod.stock import *
 
 if __name__ == '__main__':
 
-    countDownTime(6)
+    nearestInterpolation()
+    #imgInterpolation()
+    #image1()
+    #pltImage()
+    #plot6()
+    #pltAnotating()
+    #plotText()
+    #multipleFifures()
+    #plt2()
+    #plotDots()
+    #plotShow()
+    #beginPlot()
+    #getStockInfo()
+    #webScrape()
+    #countDownTime()
     #draw_with_cv()
     #monoColorPicturesShow()
     #openCamera()

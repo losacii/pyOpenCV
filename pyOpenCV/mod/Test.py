@@ -1,24 +1,86 @@
+# -*- coding: utf-8 -*-
 import sys
 log = sys.stdout.write
 import cv2
 import numpy as np
 import os
 import time, datetime
+import urllib2
+import re
+
+def getStockInfo():
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    url = 'http://hq.sinajs.cn/list=s_sh000001'
+
+    while True:
+        request = urllib2.Request(url)
+        response = urllib2.urlopen(request) 
+        value = response.read().split(',')[1]
+    
+        tm = time.strftime("%Y-%m-%d %H : %M : %S")
+        txt = "SH INDEX: " + str(value)
+
+        img = np.zeros((200,600),np.uint8)
+        cv2.putText(img,tm, (20,50),font, 0.5, (255,255,0), 1)
+        cv2.putText(img,txt, (20,30),font, 0.5, (255,255,0), 1)
+
+        cv2.imshow("img", img)
+        if cv2.waitKey(50) & 0xff == 27:
+            break
+
+    cv2.destroyAllWindows()
+    print "EXIT!"
+
+
+
+def webScrape():
+    regex = '<p>(.+?)</p>'
+    patt = re.compile(regex)
+
+    webfile = urllib2.urlopen("http://www.sohu.com/a/155964201_114988?_f=index_news_1")
+    txt = webfile.read()
+    for i in re.findall(patt, txt):
+        print i.decode("utf-8")
+        print 
 
 # Functions go here!
-def countDownTime(min, sec=0):
-    totalCount = min * 60 + sec
+def put(*li):
+    for i in li:
+        sys.stdout.write(str(i))
+        sys.stdout.flush()
+
+def beeps():
+    for _ in range(5):
+        put('\a')
+        time.sleep(0.03)
+
+def countDownTime():
+    tmp = raw_input("Enter Miinutes and Seconds, seperated with ' '\n> ").strip().split()
+    if len(tmp) == 1:
+        sec =  int(tmp[0])
+        hr = min = 0
+    elif len(tmp) == 2:
+        min, sec = [int(i) for i in tmp]
+        hr = 0
+    elif len(tmp) == 3:
+        hr, min, sec = [int(i) for i in tmp]
+
+    totalCount = hr * 3600 + min * 60 + sec
     beginTime = time.time()
     while True:
         timePassed = time.time() - beginTime
         if  timePassed > (totalCount):
-            print "Done!"
+            print "\n\nDone!"
+            beeps()
+            print len(sys.argv), sys.argv
             break
         os.system("cls")
-        m,s = divmod(totalCount - timePassed, 60)
-        print "\n> TIME LEFT: {} MINUTES {} SECONDS".format(int(m), int(s))
-        time.sleep(0.2)
-    pass
+        secsLeft = totalCount - timePassed
+        h = secsLeft // 3600
+        m = (secsLeft - 3600 * h) // 60
+        s = secsLeft % 60
+        put("TIME LEFT: {} - {} - {}".format(h, m, round(s)))
+        time.sleep(0.99)
 
 def draw_with_cv():
     mainInfo("Drawing with OpenCV")
