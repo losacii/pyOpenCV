@@ -191,17 +191,9 @@ def helloWorld():
 def cvGo():
     win1 = 'Black Rect'
 
-    img0 = cv2.imread("c:/pic/color.png")
-    img1 = np.zeros((540,960),float)
-    img2 = cv2.imread("c:/pic/f22.jpg",cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread("img/mythEyes.jpg")
 
-    cv2.imshow(win1,img0)
-    cv2.waitKey()
-
-    cv2.imshow(win1,img1)
-    cv2.waitKey()
-
-    cv2.imshow(win1,img2)
+    cv2.imshow(win1,img)
     cv2.waitKey()
 
     cv2.destroyAllWindows()
@@ -218,7 +210,7 @@ def helloNumbers():
 
 def aline():
     for _ in range(8):
-        time.sleep(0.1)
+        time.sleep(0.03)
         log(" >" * 5)
     log('\n')
 
