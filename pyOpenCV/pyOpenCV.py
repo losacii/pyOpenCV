@@ -1,39 +1,57 @@
 # coding:utf-8
 from mod.Test import *
 from mod.stock import *
+from mod.qtMod import *
+from mod.qtGraph import *
 
 def main():
     plist = []
     s = '''\
-        imgInterpolation()
-        image1()
-        pltImage()
-        plot6()
-        pltAnotating()
-        plotText()
-        multipleFifures()
-        plt2()
-        plotDots()
-        plotShow()
-        beginPlot()
-        getStockInfo()
-        webScrape()
-        countDownTime()
-        monoColorPicturesShow()
-        openCamera()
-        #pushToGit() # THIS DOESN'T WORK!
-        draw_with_cv()
-        cvGo()
-        nearestInterpolation()
-        helloWorld()'''
+    cecordCamera()
+    TK_Menus()
+    btnClass()
+    cs0_()
+    TK_button_call1()
+    TK_button_call()
+    TK_grid_layout()
+    TK_LablePostion()
+    TK__frames_buttons()
+    TK_SimpleWindow()
+    testReSplit()
+    nearestInterpolation()
+    imgInterpolation()
+    image1()
+    imageHisto()
+    pltImage()
+    plot6()
+    pltAnotating()
+    plotText()
+    multipleFifures()
+    plotShow()
+    plt2()
+    plotDots()
+    beginPlot()
+    openMedia()
+    getStockInfo()
+    webScrape()
+    put("Hello"," . WORLD!")
+    countDownTime()
+    draw_with_cv()
+    cvGo()
+    helloNumbers()
+    helloWorld()'''
     for i in s.split('\n'):
         plist.append(i.strip())    
 
     bgimg = np.zeros((540,960), np.uint8)
     font = cv2.FONT_HERSHEY_SIMPLEX
     for index, item in enumerate(plist):
-        txt = "{}.{}".format(index, item)    
-        cv2.putText(bgimg, txt, (35,index*20 + 20), font, 0.5, (200,200,20), 1)
+        txt = "{}.{}".format(index, item)   
+        x,y = 35, index*20 + 20
+        if index * 20 >= 520:
+            x += 300
+            y -= 520
+        cv2.putText(bgimg, txt, (x,y), font, 0.5, (200,200,20), 1)
         print index, item
 
     select = []
@@ -42,7 +60,9 @@ def main():
     while True:
         cv2.imshow("Program list", bgimg)
         key = cv2.waitKey(33) & 0xFF
-        if key == 27: break
+        if key == 27: 
+            print "\n\nExit!(ESC Pressed)"
+            break
         elif key >=48 and key < 58:
             wave = 0.3
             ind = key - 48
@@ -62,28 +82,13 @@ def main():
             txt = "Selection: [{}]. Run Program: {}.{}".format(num, num, plist[num])
             mainInfo(txt)
             exec(plist[num])
-
             select = []
-
-
-
-
-            
-
-            #exec(plist[ind])
 
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
 
     main()
-    
-    
-
-
-
-
-    
     pass
 
 '''
@@ -100,6 +105,4 @@ if __name__ == '__main__':
         import cv2
 
     imwrite(filename, imgObj)
-
-
 '''

@@ -21,6 +21,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="mod\qtGraph.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mod\qtMod.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="mod\stock.py">
       <SubType>Code</SubType>
     </Compile>
@@ -37,6 +43,7 @@
     <Folder Include="img\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="img\boxed-split.avi" />
     <Content Include="img\mythEyes.jpg" />
     <Content Include="img\stinkbug.png" />
     <Content Include="mod\stinkbug.png" />

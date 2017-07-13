@@ -29,9 +29,7 @@ def getStockInfo():
             break
 
     cv2.destroyAllWindows()
-    print "EXIT!"
-
-
+    print "stock info quit."
 
 def webScrape():
     regex = '<p>(.+?)</p>'
@@ -143,48 +141,60 @@ def monoColorPicturesShow():
             break
 
     cv2.destroyAllWindows()
+def testReSplit():
+    print re.split(",\s*", "1,2, 3,        4, 5,   7")
 
 def cecordCamera():
 
-    cap = cv2.VideoCapture('split.avi')
+    cap = cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-    out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (640,480))
+    vfileName = "c:/Media/vcap_" + time.strftime("%Y-%m-%d-%H%M%S") + ".mp4"
+
+    wtr = cv2.VideoWriter(vfileName, fourcc, 20.0, (640,480))
+    recordSwitch = False
 
     while True:
         ret, frame = cap.read()
-        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        if frame is None:
+            print "No image captured."
+            continue
 
-        out.write(frame)
+        if recordSwitch:
+            wtr.write(frame)
+            cv2.circle(frame, (30,30), 12, (0,0,200), -1)
+
+        cv2.imshow('frame', frame)
+
+        key = cv2.waitKey(20) & 0xff
+        if key == 27:
+            break
+        elif key == ord('r'):
+            recordSwitch = not recordSwitch
+
+    cap.release()
+    wtr.release()
+    cv2.destroyAllWindows()
+    print "file saved to :", vfileName
+
+def openMedia():
+
+    cap = cv2.VideoCapture('img/boxed-split.avi')
+
+    while True:
+        ret, frame = cap.read()
+        if frame is None:
+            print "No frame captured now... sub Program End"
+            break
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         cv2.imshow('frame', frame)
 
         if cv2.waitKey(10) & 0xff == 27:
             break
 
-    out.release()
     cap.release()
     cv2.destroyAllWindows()
 
-def openCamera():
-
-    cap = cv2.VideoCapture('split.avi')
-
-    while True:
-        ret, frame = cap.read()
-        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        cv2.imshow('frame', frame)
-
-        if cv2.waitKey(10) & 0xff == 27:
-            break
-    cap.release()
-    cv2.destroyAllWindows()
-
-
-def pushToGit():
-    print "Executing os commands:"
-    os.system("dir")
-    os.system("git init")
-    print "Done!"
-    
+   
 def helloWorld():
     print "Hello World!\n"
 
@@ -194,19 +204,17 @@ def cvGo():
     img = cv2.imread("img/mythEyes.jpg")
 
     cv2.imshow(win1,img)
-    cv2.waitKey()
+    cv2.waitKey(1000)
 
     cv2.destroyAllWindows()
 
-    log("opencv-version: ")
-    log(cv2.__version__)
+    blit("opencv-version: ")
+    blit(cv2.__version__)
 
-    print "\n\n--- PRESS ENTER TO CONTINUE ---\n"
     
 def helloNumbers():
     for i in range(10):
         print i
-
 
 def aline():
     for _ in range(8):
@@ -221,3 +229,9 @@ def mainInfo(title):
     print
     aline()
     pass
+
+def blit(s):
+    for i in s:
+        log(i)
+        if i is ' ' or i is '\n':
+            time.sleep(0.03)
