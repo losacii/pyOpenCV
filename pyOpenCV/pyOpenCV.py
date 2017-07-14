@@ -8,6 +8,7 @@ def main():
     plist = []
     s = '''\
     cecordCamera()
+    TK_listitems()
     TK_Menus()
     btnClass()
     cs0_()

@@ -148,7 +148,7 @@ def cecordCamera():
 
     cap = cv2.VideoCapture(0)
     fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-    vfileName = "c:/Media/vcap_" + time.strftime("%Y-%m-%d-%H%M%S") + ".mp4"
+    vfileName = "C:\\vcap_" + time.strftime("%Y-%m-%d-%H%M%S") + ".mp4"
 
     wtr = cv2.VideoWriter(vfileName, fourcc, 20.0, (640,480))
     recordSwitch = False
@@ -170,9 +170,12 @@ def cecordCamera():
             break
         elif key == ord('r'):
             recordSwitch = not recordSwitch
-
-    cap.release()
+        elif key == ord('s'):
+            imgName = 'C:/capImg_' + time.strftime("%Y-%m-%d-%H%M%S") + ".jpg"
+            cv2.imwrite(imgName, frame)
+            print imgName, "saved"
     wtr.release()
+    cap.release()
     cv2.destroyAllWindows()
     print "file saved to :", vfileName
 
