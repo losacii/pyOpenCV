@@ -89,6 +89,7 @@ def TK_button_call1():
     frame.pack()
 
     root.mainloop()
+    root.destroy()
 
 def TK_button_call():
     root = Tk()
