@@ -1,86 +1,64 @@
-# -*- coding: utf-8 -*-
-import sys
-log = sys.stdout.write
+# coding:utf-8
+from mod.myMods import *
 import cv2
 import numpy as np
-import os
-import time, datetime
-import urllib2
-import re
-
-def getStockInfo():
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    url = 'http://hq.sinajs.cn/list=s_sh000001'
-
-    while True:
-        request = urllib2.Request(url)
-        response = urllib2.urlopen(request) 
-        value = response.read().split(',')[1]
-    
-        tm = time.strftime("%Y-%m-%d %H : %M : %S")
-        txt = "SH INDEX: " + str(value)
-
-        img = np.zeros((200,600),np.uint8)
-        cv2.putText(img,tm, (20,50),font, 0.5, (255,255,0), 1)
-        cv2.putText(img,txt, (20,30),font, 0.5, (255,255,0), 1)
-
-        cv2.imshow("img", img)
-        if cv2.waitKey(50) & 0xff == 27:
-            break
-
-    cv2.destroyAllWindows()
-    print "stock info quit."
-
-def webScrape():
-    regex = '<p>(.+?)</p>'
-    patt = re.compile(regex)
-
-    webfile = urllib2.urlopen("http://www.sohu.com/a/155964201_114988?_f=index_news_1")
-    txt = webfile.read()
-    for i in re.findall(patt, txt):
-        print i.decode("utf-8")
-        print 
-
-# Functions go here!
-def put(*li):
-    for i in li:
-        sys.stdout.write(str(i))
-        sys.stdout.flush()
-
-def beeps():
-    for _ in range(5):
-        put('\a')
-        time.sleep(0.03)
+import datetime
 
 def countDownTime():
-    tmp = raw_input("Enter Miinutes and Seconds, seperated with ' '\n> ").strip().split()
-    if len(tmp) == 1:
-        sec =  int(tmp[0])
-        hr = min = 0
-    elif len(tmp) == 2:
-        min, sec = [int(i) for i in tmp]
-        hr = 0
-    elif len(tmp) == 3:
-        hr, min, sec = [int(i) for i in tmp]
+    ''' 说明：倒计时
+    '''
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    img = np.zeros((540,960), np.uint8)
 
-    totalCount = hr * 3600 + min * 60 + sec
+    tput = raw_input("Enter Miinutes and Seconds, seperated with ' '\n> ").strip().split()
+    tli = [0, 0, 0, 0]
+
+    for i in range(len(tput)):
+        tli[-i-1] = tput[-i-1]
+
+    day, hr, min, sec = tli
+    totalCount = int(day) * 24 * 3600 + int(hr) * 3600 + int(min) * 60 + int(sec)
+
     beginTime = time.time()
     while True:
-        timePassed = time.time() - beginTime
-        if  timePassed > (totalCount):
-            print "\n\nDone!"
-            beeps()
-            print len(sys.argv), sys.argv
+        if cv2.waitKey(180) & 0xff == 27:
             break
         os.system("cls")
-        secsLeft = totalCount - timePassed
-        h = secsLeft // 3600
-        m = (secsLeft - 3600 * h) // 60
-        s = secsLeft % 60
-        put("TIME LEFT: {} - {} - {}".format(h, m, round(s)))
-        time.sleep(0.99)
 
-def draw_with_cv():
+        timePassed = time.time() - beginTime
+        if  timePassed > (totalCount):
+            put("\nDone!", '\a' * 5)            
+            break
+
+        timeLeft = totalCount - timePassed
+        tlli = []
+        x, y = [int(i) for i in divmod(timeLeft, 3600 * 24)]
+        tlli.append(x) # day
+        x, y = [int(i) for i in divmod(y, 3600)]
+        tlli.append(x) # hr
+        x, y = [int(i) for i in divmod(y, 60)]
+        tlli.append(x) # min
+        tlli.append(y) # sec
+        dayLeft, hrLeft, minLeft, secLeft = tlli
+        
+        txt = []
+        if dayLeft > 0: txt.append("{} day(s)".format(dayLeft))
+        if hrLeft > 0: txt.append(" {} hour(s)".format(hrLeft))
+        if minLeft > 0: txt.append(" {} minute(s)".format(minLeft))
+        txt.append((" {} second(s) left".format(secLeft)))
+        
+        tmpImage = cv2.imread("img/view.png")
+        ptxt = ''.join(txt)
+        cv2.putText(tmpImage, ptxt,(35,25), font, 0.5, (200,200,200,1), 1)
+        cv2.imshow('Counting Down Time', tmpImage)
+
+    cv2.destroyAllWindows()        
+
+
+def cv_Draw():
+    ''' 说明：绘制图形
+    '''
+
     mainInfo("Drawing with OpenCV")
     img = np.zeros((540,960,3),np.uint8)
 
@@ -111,7 +89,7 @@ def draw_with_cv():
     # text
     pos = (50,270)
     pos2 = (800,270)
-    lineWidth = 0.5
+    lineWidth = 0.9
     thickness = 1
 
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -123,30 +101,33 @@ def draw_with_cv():
     cv2.waitKey(int(20e3))
     cv2.destroyAllWindows()
 
-
 def monoColorPicturesShow():
+    ''' 说明：单色图片、时间显示
+    '''
     font = cv2.FONT_HERSHEY_SIMPLEX
     img = np.zeros((540,960), np.uint8)
     
     while True:
+        img = np.zeros((540,960), np.float)
 
         showTime = time.strftime("%Y-%m-%d_%H:%M:%S")
         secDigits = datetime.datetime.now().microsecond.__str__()[:2]
         info = "{0}{1}.{2}".format('REC_', showTime, secDigits)
-        img = np.zeros((540,960), np.float)
-        cv2.putText(img, info,(35,25), font, 0.5, (200,60,100,1), 1)
+
+        cv2.putText(img, info,(35,25), font, 0.9, (200,60,100,1), 1)
         cv2.imshow('img', img)
 
         if 27 == (cv2.waitKey(20) & 0xff):
             break
 
     cv2.destroyAllWindows()
-def testReSplit():
-    print re.split(",\s*", "1,2, 3,        4, 5,   7")
+
 
 def cecordCamera():
+    ''' 说明：打开视频或者摄像头，'s'键保存图片，'r'键录制/暂停(写入)
+    '''
 
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture('video/split.avi')
     fourcc = cv2.VideoWriter_fourcc(*'MP4V')
     vfileName = "C:\\vcap_" + time.strftime("%Y-%m-%d-%H%M%S") + ".mp4"
 
@@ -179,9 +160,10 @@ def cecordCamera():
     cv2.destroyAllWindows()
     print "file saved to :", vfileName
 
-def openMedia():
-
-    cap = cv2.VideoCapture('img/boxed-split.avi')
+def cvOpenMedia():
+    ''' 打开视频，播放视频
+    '''
+    cap = cv2.VideoCapture('video/split.avi')
 
     while True:
         ret, frame = cap.read()
@@ -194,47 +176,21 @@ def openMedia():
         if cv2.waitKey(10) & 0xff == 27:
             break
 
-    cap.release()
+    cap.release(); print "Video released."
     cv2.destroyAllWindows()
 
-   
-def helloWorld():
-    print "Hello World!\n"
 
-def cvGo():
-    win1 = 'Black Rect'
+def cvReadImage():
+    ''' 读取、显示图片
+    '''
+    win1 = 'Read Image'
 
-    img = cv2.imread("img/mythEyes.jpg")
+    img = cv2.imread("img/eyes.jpg")
 
     cv2.imshow(win1,img)
     cv2.waitKey(1000)
 
     cv2.destroyAllWindows()
 
-    blit("opencv-version: ")
+    blit("\nopencv-version: ")
     blit(cv2.__version__)
-
-    
-def helloNumbers():
-    for i in range(10):
-        print i
-
-def aline():
-    for _ in range(8):
-        time.sleep(0.03)
-        log(" >" * 5)
-    log('\n')
-
-def mainInfo(title):
-    aline()
-    print
-    log(str(title).upper().center(80)); log('\n')
-    print
-    aline()
-    pass
-
-def blit(s):
-    for i in s:
-        log(i)
-        if i is ' ' or i is '\n':
-            time.sleep(0.03)

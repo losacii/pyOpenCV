@@ -21,32 +21,30 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="mod\qtGraph.py">
+    <Compile Include="mod\cvMod.py" />
+    <Compile Include="mod\myMods.py" />
+    <Compile Include="mod\plotBasics.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="mod\qtMod.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="mod\stock.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="mod\Test.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="mod\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="mod\pyBasic.py" />
+    <Compile Include="mod\tk_Examples.py" />
+    <Compile Include="mod\webBasics.py" />
+    <Compile Include="mod\__init__.py" />
     <Compile Include="pyOpenCV.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="mod\" />
     <Folder Include="img\" />
+    <Folder Include="video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="img\boxed-split.avi" />
-    <Content Include="img\mythEyes.jpg" />
+    <Content Include="img\eyes.jpg" />
     <Content Include="img\stinkbug.png" />
-    <Content Include="mod\stinkbug.png" />
+    <Content Include="img\view.png" />
+    <Content Include="img\view2.png" />
+    <Content Include="video\move.avi" />
+    <Content Include="video\split.avi" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

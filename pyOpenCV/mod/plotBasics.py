@@ -1,7 +1,5 @@
 # coding:utf-8
-
-import numpy as np
-import matplotlib.pyplot as plt
+from mod.myMods import *
 
 def nearestInterpolation():
     from PIL import Image
@@ -25,19 +23,19 @@ def imgInterpolation():
     '''
     from PIL import Image
     img = Image.open('img/stinkbug.png')
-    img.thumbnail((64, 64), Image.ANTIALIAS) # resizes image in-place
+    img.thumbnail((32, 32), Image.ANTIALIAS) # resizes image in-place
     imgplot = plt.imshow(img)
     plt.show()
 
 
-def image1():
+def imageEnhance():
     import matplotlib.image as mpimg
     img=mpimg.imread('img/stinkbug.png')
     lum_img = img[:,:,0]  
     
 
     plt.figure()
-    plt.subplot(2,2,1)
+    plt.subplot(2,1,1)
     imgplot = plt.imshow(lum_img, clim=(0.2, 0.7))
 
     plt.show()
@@ -73,8 +71,6 @@ def pltImage():
 
 
     plt.show()
-
-
 
 def plot6():
     from matplotlib.ticker import NullFormatter  # useful for `logit` scale
@@ -130,6 +126,7 @@ def plot6():
 
     plt.show()
 
+
 def pltAnotating():
     ax = plt.subplot(111)
 
@@ -181,6 +178,8 @@ def multipleFifures():
 
     plt.show()
 
+
+
 def plotShow():
 
     X = np.linspace(-2 * np.pi, 2 * np.pi, 256)
@@ -192,9 +191,6 @@ def plotShow():
     plt.plot(X, Ycos, linewidth=3.0, alpha=0.8)
 
     plt.show()
-
-
-
 
 def plt2():
     # evenly sampled time at 200ms intervals
@@ -214,5 +210,3 @@ def beginPlot():
     plt.plot([1,2,3,4,5,2,4])
     plt.ylabel('some numbers')
     plt.show()
-
-

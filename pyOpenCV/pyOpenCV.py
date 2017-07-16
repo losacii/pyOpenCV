@@ -1,109 +1,82 @@
 # coding:utf-8
-from mod.Test import *
-from mod.stock import *
-from mod.qtMod import *
-from mod.qtGraph import *
+from mod.myMods import *
+from mod.tk_Examples import *
+from mod.pyBasic import *
+from mod.cvMod import *
+from mod.webBasics import *
+from mod.plotBasics import *
+
+
+def runFunction(event, afunc):
+    exec(afunc)
+
+class PBtn:
+
+    def __init__(self, master, txt, program):
+
+        self.Btn = Button(master, text=txt)
+        self.Btn.bind('<Button-1>', lambda x: runFunction(x, program))
+        self.Btn.pack(fill=X)
+
+    def bind(self, key, program):
+        self.Btn.bind(key, lambda x: runFunction(x, program))
+
 
 def main():
-    plist = []
-    s = '''\
-    cecordCamera()
-    TK_listitems()
-    TK_Menus()
-    btnClass()
-    cs0_()
-    TK_button_call1()
-    TK_button_call()
-    TK_grid_layout()
-    TK_LablePostion()
-    TK__frames_buttons()
-    TK_SimpleWindow()
-    testReSplit()
-    nearestInterpolation()
-    imgInterpolation()
-    image1()
-    imageHisto()
-    pltImage()
-    plot6()
-    pltAnotating()
-    plotText()
-    multipleFifures()
-    plotShow()
-    plt2()
-    plotDots()
-    beginPlot()
-    openMedia()
-    getStockInfo()
-    webScrape()
-    put("Hello"," . WORLD!")
-    countDownTime()
-    draw_with_cv()
-    cvGo()
-    helloNumbers()
-    helloWorld()'''
-    for i in s.split('\n'):
-        plist.append(i.strip())    
+    root = Tk()
+    root.minsize(580,360)
 
-    bgimg = np.zeros((540,960), np.uint8)
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    for index, item in enumerate(plist):
-        txt = "{}.{}".format(index, item)   
-        x,y = 35, index*20 + 20
-        if index * 20 >= 520:
-            x += 300
-            y -= 520
-        cv2.putText(bgimg, txt, (x,y), font, 0.5, (200,200,20), 1)
-        print index, item
+    frameBasic = Frame(root) # an invisible container
+    frameBasic.pack(side=LEFT)
+    PBtn(frameBasic, "sayHello", "sayHello('John Berry')")
+    PBtn(frameBasic, "RE : split test", "testReSplit()")
+    PBtn(frameBasic, "字符编码", "UnicodeToUtf8()")
+    x = PBtn(frameBasic, "鼠标左右键绑定", "mainInfo('Hello World!!!!!')")
+    x.bind('<Button-3>', "sayHello('Mickey')")
 
-    select = []
-    wave = 0.9
-    free = False
-    while True:
-        cv2.imshow("Program list", bgimg)
-        key = cv2.waitKey(33) & 0xFF
-        if key == 27: 
-            print "\n\nExit!(ESC Pressed)"
-            break
-        elif key >=48 and key < 58:
-            wave = 0.3
-            ind = key - 48
-            select.append(ind)
-            free = True
+    frameOpenCV = Frame(root,width=800)
+    frameOpenCV.pack(side=LEFT)
+    PBtn(frameOpenCV, "cv2: 读取、显示图片", "cvReadImage()")
+    PBtn(frameOpenCV, "cv2: 读取、播放视频", "cvOpenMedia()")
+    PBtn(frameOpenCV, "cv2: 录制视频", "cecordCamera()")
+    PBtn(frameOpenCV, "cv2: 单色图片、时间显示", "monoColorPicturesShow()")
+    PBtn(frameOpenCV, "cv2: 绘制图形", "cv_Draw()")
+    PBtn(frameOpenCV, "cv2: 倒计时", "countDownTime()")
 
-        wave -= 0.03
-        if wave <= 0 and free:            
-            free = not free
-            select.reverse()
-            
-            num = 0
-            for i in range(len(select)):
-                num += 10 ** (i) * select[i]
+    frameTkinter = Frame(root)
+    frameTkinter.pack(side=LEFT)
+    PBtn(frameTkinter, "Tkinter: lables on root window", "tk_lables()")
+    PBtn(frameTkinter, "Tkinter: Frame,Buton的布局", "TK__frames_buttons()")
+    PBtn(frameTkinter, "Tkinter: grid_layout()", "TK_grid_layout()")
+    PBtn(frameTkinter, "Tkinter: TK_Menus()", "TK_Menus()")
+    PBtn(frameTkinter, "Tkinter: TK_listitems()", "TK_listitems()")
+    PBtn(frameTkinter, "Tkinter: ", "")
+    PBtn(frameTkinter, "Tkinter: ", "")    
 
-            os.system("cls")
-            txt = "Selection: [{}]. Run Program: {}.{}".format(num, num, plist[num])
-            mainInfo(txt)
-            exec(plist[num])
-            select = []
+    framePlot = Frame(root)
+    framePlot.pack(side=LEFT)
+    PBtn(framePlot, "Plot: simple Plot", "beginPlot()")
+    PBtn(framePlot, "Plot: 画点", "plotDots()")
+    PBtn(framePlot, "Plot: 线条点样式", "plt2()")
+    PBtn(framePlot, "Plot: 正弦、余弦曲线", "plotShow()")
+    PBtn(framePlot, "Plot: 多幅图片", "multipleFifures()")
+    PBtn(framePlot, "Plot: 文字、直方图", "plotText()")
+    PBtn(framePlot, "Plot: 注解", "pltAnotating()")
+    PBtn(framePlot, "Plot: plot6()", "plot6()")
+    PBtn(framePlot, "Plot: pltImage()", "pltImage()")
+    PBtn(framePlot, "Plot: imageHisto()", "imageHisto()")
+    PBtn(framePlot, "Plot: 图像增强", "imageEnhance()")
+    PBtn(framePlot, "Plot: imgInterpolation()", "imgInterpolation()")
+    PBtn(framePlot, "Plot: nearestInterpolation()", "nearestInterpolation()")
 
-    cv2.destroyAllWindows()
+    frameWeb = Frame(root)
+    frameWeb.pack(side=LEFT)
+    PBtn(frameWeb, "Web: 网页内容提取", "webScrape()")
+    PBtn(frameWeb, "Web: StockInfo", "getStockInfo()")    
+
+    root.mainloop()
 
 if __name__ == '__main__':
-
     main()
-    pass
 
-'''
-    install python
-    add env variables: c:\python27;c:\python27\scripts;
-    cmd >> 
-        pip install numpy
-        pip install mapplotlib
-
-        download opencv3.2.0-vc14.exe
-        extract, search cv2.pyd
-        move it to python/Lib/site-packges/
-        done!
-        import cv2
-
-    imwrite(filename, imgObj)
-'''
+    print "\n\n----- Exit! -----"
